@@ -38,15 +38,12 @@ public class Piece : MonoBehaviour
     private void Update()
     {
     
-
-        // БЛОКИРОВКА НА ПАУЗЕ: если игра остановлена, клавиши не работают
         if (Time.timeScale == 0f) return; 
 
         if (cells == null || board == null) return;
 
         board.Clear(this);
 
-        // Таймер блокировки растет только у земли
         if (!board.IsValidPosition(this, position + Vector3Int.down)) {
             lockTime += Time.deltaTime;
         } else {
@@ -86,7 +83,6 @@ public class Piece : MonoBehaviour
 
         bool movedDown = Move(Vector2Int.down);
 
-        // Фиксируем фигуру, только если она не может идти вниз и вышло время задержки
         if (!movedDown && lockTime >= lockDelay) {
             Lock();
         }
@@ -119,7 +115,7 @@ public class Piece : MonoBehaviour
         if (valid)
         {
             position = newPosition;
-            lockTime = 0f; // Сбрасываем таймер фиксации при успешном движении
+            lockTime = 0f;
         }
 
         return valid;
