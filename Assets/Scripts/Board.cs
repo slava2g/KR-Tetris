@@ -48,8 +48,6 @@ public class Board : MonoBehaviour
         int random = Random.Range(0, tetrominoes.Length);
         TetrominoData data = tetrominoes[random];
 
-        // УСКОРЕНИЕ: Считаем скорость на основе текущих очков. 
-        // Каждые 100 очков ускоряют падение на 0.1 сек. Лимит разгона — 0.1 сек на шаг.
         if (activePiece != null) {
             float currentDelay = Mathf.Max(1.5f - (score / 100) * 0.05f, 0.05f);
             activePiece.stepDelay = currentDelay;
@@ -72,7 +70,6 @@ public class Board : MonoBehaviour
         score = 0;          
         UpdateScore(score);
 
-        // ВОЗВРАТ СКОРОСТИ: Сбрасываем задержку новой фигуры обратно на 1 секунду
         if (activePiece != null) {
             activePiece.stepDelay = 1f;
         }
@@ -138,7 +135,6 @@ public class Board : MonoBehaviour
                 score += 100;
                 UpdateScore(score);
 
-                // УСКОРЕНИЕ: Сразу же разгоняем текущую активную фигуру после сжигания линии
                 if (activePiece != null) {
                     float newDelay = 1f - (score / 100) * 0.1f;
                     activePiece.stepDelay = Mathf.Max(newDelay, 0.1f);
@@ -238,7 +234,6 @@ public class Board : MonoBehaviour
             notificationObject.SetActive(true);
         }
 
-        // Заменили на Реальное время, чтобы не зависало при остановке игры
         yield return new WaitForSecondsRealtime(duration); 
 
         if (notificationObject != null) {
